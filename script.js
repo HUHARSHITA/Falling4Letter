@@ -79,6 +79,7 @@ clearBtn.addEventListener("click", () => {
   input.value = "";
 });
 
+
 // ✅ Fixed orientation popup
 function checkOrientation() {
   const isMobileScreen = window.innerWidth <= 768; // consider ≤768px as mobile
@@ -95,9 +96,31 @@ function checkOrientation() {
 ["load", "resize", "orientationchange"].forEach(evt =>
   window.addEventListener(evt, checkOrientation)
 );
+// ✅ Dismiss popup on tap (once dismissed, never comes back)
+let popupDismissed = false;
+
+popup.addEventListener("click", () => {
+  popupDismissed = true;
+  popup.style.display = "none";
+});
+
+// Override checkOrientation to respect dismissal
+function checkOrientation() {
+  if (popupDismissed) return; // don't show again once dismissed
+
+  const isMobileScreen = window.innerWidth <= 768; // consider ≤768px as mobile
+  const isPortrait = window.innerHeight > window.innerWidth;
+
+  if (isMobileScreen && isPortrait) {
+    popup.style.display = "flex";  // show popup
+  } else {
+    popup.style.display = "none";  // hide popup
+  }
+}
 
 // Toggle chat sidebar
 toggleChatBtn.addEventListener("click", () => {
   chatSidebar.classList.toggle("open");
 });
+
 
