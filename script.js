@@ -66,6 +66,10 @@ input.addEventListener("keydown", e => {
     input.value = "";
   }
 });
+// Rotate popup dismiss on tap/click
+document.getElementById("rotatePopup").addEventListener("click", function () {
+  this.style.display = "none";
+});
 
 // Clear all
 clearBtn.addEventListener("click", () => {
@@ -96,3 +100,4 @@ function checkOrientation() {
 toggleChatBtn.addEventListener("click", () => {
   chatSidebar.classList.toggle("open");
 });
+
